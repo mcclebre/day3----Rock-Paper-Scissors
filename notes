@@ -8,6 +8,7 @@ Computer must choose randomly between r,p,s (1-3)
 countdown timer of 5 seconds to make selection, at end of 5 seconds, reveals computer random selection. If no selection made within 5 seconds, default to rock.
 win/lose notification/add points 
 if draw, notify draw and move on 
+randomize 10 total computer responses, in form of "questions" -like arrayed objects like seen in quiz app. However, cap at 5 total wins from either person to win game. Responses will be the same, but not organized in a predictable pattern.
 
 
 
