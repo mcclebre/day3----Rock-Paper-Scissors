@@ -11,26 +11,33 @@
 <body>
     
     <div class="container">
-        <div class="title-card">
-            Rock, Paper, Scissors  
-        </div>
-        <div id="scoreboard" class="hide">
-            <div id="player-score">0</div>
-            <div id="computer-score">0</div>
-        </div>
         <div id="selection-container" class="hide">
-            <div id="selection-display">selection</div>
-            <div id="computer-selection-display">comp</div>
             <div id="selection-btn" class="btn-grid">
-                <button class="btn">Rock</button>
-                <button class="btn">Paper</button>
-                <button class="btn">Scissors</button>
+                <button class="btn" data-selection="rock">Rock</button>
+                <button class="btn" data-selection="paper">Paper</button>
+                <button class="btn" data-selection="scissors">Scissors</button>
             </div>
         </div>
-        <div class="controls">
-            <button id="start-btn" class="start-btn btn">Start</button>
-            <button id="next-btn" class="next-btn btn hide">Next</button>
+
+        <div id="result-display" class="hide">
+            <div class="hide">
+                You
+                <span class="result-score hide" data-your-score>0</span>
+            </div>
+            <div data-final-column class="hide">
+                Computer
+                <span class="result-score hide" data-computer-score>0</span>
+            </div>
+<!-- 
+            <div class="result-selection winner hide">Rock</div>
+            <div class="result-selection hide">Scissors</div>
         </div>
+         -->
+
+        
+        <!-- <div class="controls">
+            <button id="start-btn" class="start-btn btn">Start</button>
+        </div> -->
         
     </div>
 

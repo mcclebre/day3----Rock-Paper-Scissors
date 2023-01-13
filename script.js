@@ -1,123 +1,65 @@
-const startButton = document.getElementById('start-btn')
-const nextButton = document.getElementById('next-btn') 
-const selectionContainerElement = document.getElementById('selection-container')
-const selectionButtonsElement = document.getElementById('selection-btn')
-const scoreBoardElement = document.getElementById('scoreboard')
-const computerSelectionElement = document.getElementById('computer-selection-display')
-const playerSelectionElement = document.getElementById('selection-display')
+const selectionButtons = document.querySelectorAll("[data-selection]");
+const finalColumn = document.querySelector("[data-final-column]");
+const computerScoreSpan = document.querySelector("[data-computer-score]");
+const playerScoreSpan = document.querySelector("[data-your-score]");
 
+const SELECTIONS = [
+  {
+    name: "rock",
+    display: "ROCK",
+    beats: "scissors",
+  },
+  {
+    name: "paper",
+    display: "PAPER",
+    beats: "rock",
+  },
+  {
+    name: "scissors",
+    display: "SCISSORS",
+    beats: "paper",
+  },
+];
 
-let currentResultIndex, shuffledComputerResults
+selectionButtons.forEach((selectionButton) => {
+  selectionButton.addEventListener("click", (e) => {
+    const selectionName = selectionButton.dataset.selection;
+    const selection = SELECTIONS.find(
+      (selection) => selection.name === selectionName
+    );
+    makeSelection(selection);
+  });
+});
 
+function makeSelection(selection) {
+  const computerSelection = randomSelection();
+  const playerWin = isWinner(selection, computerSelection);
+  const computerWin = isWinner(computerSelection, selection);
 
-startButton.addEventListener('click', startGame)
-nextButton.addEventListener('click',() => {
-    currentResultIndex++
-    setNextRound()
-    
-})
+  addSelectionResult(computerSelection, computerWin);
+  addSelectionResult(selection, playerWin);
 
-
-
-
-function startGame() {
-startButton.classList.add('hide')
-shuffledComputerResults = results.sort(() => 
-Math.random() - .5)
-currentResultIndex = 0
-selectionContainerElement.classList.remove('hide')
-scoreBoardElement.classList.remove('hide')
-setNextRound()
-}
-function checkWins() {
-
-}
-
-function setNextRound() {
-checkWins()
-
-}
-
-function computerRandomSelection() {
-
-}
-
-function revealComputerSelection(computerSelection) {
-    computerSelectionElement.innerText = computerSelection.text
-
+  if (playerWin) incrimentScore(playerScoreSpan);
+  if (computerWin) incrimentScore(computerScoreSpan);
 }
 
-function resetState() {
-clearStatusClass(document.body)
-while( selectionButtonsElement.firstChild) {
-    selectionButtonsElement.removeChild(selectionButtonsElement.firstChild)
-}
+function incrimentScore(scoreSpan) {
+  scoreSpan.innerText = parseInt(scoreSpan.innerText) + 1;
 }
 
-function selectAnswer(e) {
-    const selectedButton = e.target
-    const win = selectedButton.dataset
-    // add more to this, this is your selected value of rock(1), paper(2), or scissors(3)
-    // if this is 'winner' over the value of the random result, then user wins, otherwise, user loses.
-    setStatusClass(document.body, win)
-    Array.from(selectionButtonsElement.children).forEach(button => {
-        setStatusClass(button,button.dataset)
-    })
-    if (shuffledComputerResults.length > currentResultIndex + 1) {
-       setNextRound()
-    } else {
-        startButton.innerText = 'GAME OVER... RETRY?'
-        startButton.classList.remove('hide')
-    }
-
+function addSelectionResult(selection, winner) {
+  const div = document.createElement("div");
+  div.innerText = selection.display;
+  div.classList.add("result-selection");
+  if (winner) div.classList.add("winner");
+  finalColumn.after(div);
 }
 
-function setStatusClass(element, win) {
-clearStatusClass(element)
-if (win) {
-    element.classList.add('win')
-} else {
-    element.classList.add('lose')
-}
+function randomSelection() {
+  const randomIndex = Math.floor(Math.random() * SELECTIONS.length);
+  return SELECTIONS[randomIndex];
 }
 
-function clearStatusClass(element) {
-
+function isWinner(selection, opponentSelection) {
+  return selection.beats === opponentSelection.name;
 }
-
-
-const results = [
-    {
-        text: 'ROCK' , resultId: 1 
-    },
-
-    {
-       text: 'PAPER' , resultId: 2
-    },
-
-    {
-       text: 'SCISSORS' , resultId: 3
-    },
-    {
-        text: 'ROCK' , resultId: 1
-    },
-
-    {
-       text: 'PAPER' , resultId: 2
-    },
-
-    {
-       text: 'SCISSORS' , resultId: 3
-    },
-    {
-        text: 'ROCK' , resultId: 1
-    },
-
-    {
-       text: 'PAPER' , resultId: 2
-    },
-
-    {
-       text: 'SCISSORS' , resultId: 3
-    },
-]
